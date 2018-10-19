@@ -20,5 +20,6 @@ public class Test {
         }
         
         s.outMajor();
+        
     }
 }
