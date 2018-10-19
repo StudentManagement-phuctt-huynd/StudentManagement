@@ -7,6 +7,9 @@ package phuctt;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Scanner;
+import java.util.TreeMap;
 
 
 /**
@@ -31,9 +34,24 @@ public class Test {
         a.add(sj);
         Student st = new Student("2458", "Nguyễn Thị", "Doãn", 10, 10, 1990, false, "ITo", a);
         
-        s.addStudent(st);
+//        s.addStudent(st);
+        TreeMap<String, Major> ts = s.getMajorList();
+        Iterator it = ts.keySet().iterator();
         
-        s.sortList();
+        while (it.hasNext()) {
+            System.out.println(ts.get(it.next()).toString());
+        }
         
+        Scanner sc = new Scanner(System.in);
+        String ID = "102022288";
+        System.out.println("Major: ");
+        String major = sc.nextLine();
+        s.editMajor(major, ID);
+        
+        it = ts.keySet().iterator();
+        
+        while (it.hasNext()) {
+            System.out.println(ts.get(it.next()).toString());
+        }
     }
 }

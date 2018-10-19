@@ -12,16 +12,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Locale;
+import java.util.TreeMap;
 import java.util.TreeSet;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -29,7 +28,7 @@ import java.util.logging.Logger;
  */
 public class StudentList extends HashMap<String, Student> {
 
-    private MajorList majorList = new MajorList();
+    private TreeMap<String, Major> majorList = new TreeMap<>();
 
     //read data from file
     public void readFile() throws IOException {
@@ -125,8 +124,8 @@ public class StudentList extends HashMap<String, Student> {
             pw = new PrintWriter(fw);
 
             TreeSet<Student> ts = sortList();
-            String header = "No\t" + "ID\t" + "LastName\t" + "FirstName\t" + 
-                            "DateOfBirth\t" + "Gender\t" + "Major\t" + "English\t" + "Math\t" + "IT";
+            String header = "No\t" + "ID\t" + "LastName\t" + "FirstName\t"
+                    + "DateOfBirth\t" + "Gender\t" + "Major\t" + "English\t" + "Math\t" + "IT";
             pw.println(header);
             int count = 1;
             Iterator it = ts.iterator();
@@ -208,7 +207,7 @@ public class StudentList extends HashMap<String, Student> {
         return ts;
     }
 
-    private String formatStrFile(Student s, int number) {
+    public String formatStrFile(Student s, int number) {
         String str;
         str = number + "\t";
         str += s.getID() + "\t";
@@ -228,4 +227,139 @@ public class StudentList extends HashMap<String, Student> {
         return str;
     }
 
+    public boolean editFirstName(String fName, String id) throws IOException {
+        Student s = super.get(id);
+        if (s != null) {
+            s.setFirstName(fName);
+            super.replace(id, s);
+            writeFile();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean editLastName(String lName, String id) throws IOException {
+        Student s = super.get(id);
+        if (s != null) {
+            s.setLastName(lName);
+            super.replace(id, s);
+            writeFile();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean editBirthdate(String birthdate, String id) throws IOException {
+        Student s = super.get(id);
+        if (s != null) {
+            s.setBirthdate(birthdate);
+            super.replace(id, s);
+            writeFile();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean editGender(String gender, String id) throws IOException {
+        Student s = super.get(id);
+        if (s != null) {
+            s.setGender(gender.equalsIgnoreCase("nam") ? true : false);
+            super.replace(id, s);
+            writeFile();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean editMajor(String major, String id) throws IOException {
+        Student s = super.get(id);
+        if (s != null) {
+            Major m = majorList.get(s.getMajor());
+            m.removedStudentId(id);
+
+            s.setMajor(major);
+            m = majorList.get(major);
+            m.addStudentId(id);
+
+            super.replace(id, s);
+            writeFile();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public int editMark(String subject, String id, double mark) throws IOException {
+        Student s = super.get(id);
+        //error code
+        //0: success
+        //1: not found id
+        //2: not found subject
+        if (s != null) {
+            ArrayList<Subject> ar = s.getSubjectList();
+
+            for (int i = 0; i < ar.size(); i++) {
+                if (ar.get(i).getSubject().equalsIgnoreCase(subject)) {
+                    ar.get(i).setMark(mark);
+
+                    super.replace(id, s);
+                    writeFile();
+
+                    return 0;
+                }
+            }
+            return 2;
+        } else {
+            return 1;
+        }
+    }
+
+    public Student findbyId(String id) {
+        return super.get(id);
+    }
+
+    public TreeMap<String, Major> getAllMajorList() {
+        return majorList;
+    }
+    
+    public Major getMajor(String major) {
+        return majorList.get(major);
+    }
+
+    public TreeSet<Student> getMajorList(String major) {
+        TreeSet<Student> ts = new TreeSet<>(new Comparator<Student>() {
+            @Override
+            public int compare(Student o1, Student o2) {
+                Collator myCo = Collator.getInstance(new Locale("vi"));              
+                if (myCo.compare(o1.getFirstName(), o2.getFirstName()) > 0) {
+                    return 1;
+                } else if (myCo.compare(o1.getFirstName(), o2.getFirstName()) < 0) {
+                    return -1;
+                } else {
+                    if (myCo.compare(o1.getLastName(), o2.getLastName()) > 0) {
+                        return 1;
+                    } else {
+                        return -1;
+                    }
+                }
+            }
+        });
+        
+        LinkedList<String> studentIdList;
+        
+        studentIdList = majorList.get(major).getStudentIdList();
+        
+        Iterator it = studentIdList.iterator();
+        
+        while (it.hasNext()) {
+            Student s = get((String) it.next());
+            ts.add(s);
+        }
+        
+        return ts;
+    }
 }

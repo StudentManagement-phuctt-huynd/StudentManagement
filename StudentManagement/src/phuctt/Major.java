@@ -42,6 +42,10 @@ public class Major {
         this.studentIdList.add(id);
     }
     
+    public void removedStudentId(String id) {
+        this.studentIdList.remove(id);
+    }
+    
     public int getSize() {
         return this.studentIdList.size();
     }
