@@ -5,22 +5,25 @@
  */
 package phuctt;
 
+import java.util.LinkedList;
+
 /**
  *
  * @author Thien Phuc
  */
 public class Major {
     private String major;
-    private int count;
+    private LinkedList<String> studentIdList;
 
     public Major() {
         this.major = null;
-        this.count = 0;
+        this.studentIdList = new LinkedList<>();
     }
 
-    public Major(String major) {
+    public Major(String major, String studentId) {
         this.major = major;
-        this.count = 1;
+        this.studentIdList = new LinkedList<>();
+        studentIdList.add(studentId);
     }
 
     public String getMajor() {
@@ -30,18 +33,22 @@ public class Major {
     public void setMajor(String major) {
         this.major = major;
     }
-
-    public int getCount() {
-        return count;
+    
+    public LinkedList getStudentIdList() {
+        return studentIdList;
     }
     
-    public void incrCount() {
-        this.count++;
+    public void addStudentId(String id) {
+        this.studentIdList.add(id);
+    }
+    
+    public int getSize() {
+        return this.studentIdList.size();
     }
 
     @Override
     public String toString() {
-        return "Major{" + "major=" + major + ", count=" + count + '}';
+        return "Major{" + "major=" + major + ", count=" + getSize() + '}';
     }
       
 }

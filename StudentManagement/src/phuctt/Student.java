@@ -99,7 +99,7 @@ public class Student {
         this.birthYear = birthYear;
     }
 
-    public boolean isGender() {
+    public boolean getGender() {
         return gender;
     }
 
