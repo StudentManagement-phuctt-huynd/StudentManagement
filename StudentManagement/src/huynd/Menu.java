@@ -42,7 +42,7 @@ public class Menu {
         System.out.println("    - Gender: 1. Male      2. Female");
     }
     public static void printMajorMenu() {
-        System.out.println("    1. Math    2. IT    3. English");
+        System.out.println("    " + "- Major: 1. Tourist    2. IT    3. English");
     }
     
     public static void printInvalidStament(String title) {

@@ -3,8 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package huynd;
+package huynd.studentInfo;
 
+import huynd.ConsoleColors;
+import huynd.ConsoleColors;
+import huynd.Menu;
+import huynd.Menu;
+import huynd.ValidationHandler;
+import huynd.ValidationHandler;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
 import phuctt.Student;
 
@@ -32,6 +44,34 @@ public class StudentInfoAddition {
         
         return fullName;
     }
+    public static String getFirstName(String fullName) {
+        String firstName = "";
+        char[] arr = fullName.toCharArray();
+        
+        for (int i = (int)(fullName.length()) - 1; i >= 0; i--) {
+            if(arr[i] == ' ') {
+                firstName = fullName.substring(i + 1);
+                break;
+            }
+        }
+        
+        return firstName;
+    }
+    public static String getLastName(String fullName) {
+        String lastName = "";
+        char[] arr = fullName.toCharArray();
+        
+        for (int i = (int)(fullName.length()) - 1; i >= 0; i--) {
+            if(arr[i] == ' ') {
+                lastName = fullName.substring(0, i);
+                break;
+            }
+        }
+        
+        return lastName;
+    }
+    
+    
     public static int addStudentBirthYear() {
         Scanner input = new Scanner(System.in);
         int birthYear = -1;
@@ -112,45 +152,58 @@ public class StudentInfoAddition {
         Scanner input = new Scanner(System.in);
         int selection = -1;
         
-        try {
-            selection = input.nextInt();
-        } catch(Exception e) {
-            return "";
-        }
-        return (selection == 1) ? "Math" : ((selection == 2) ? "IT" : (selection == 3) ? "English" : "IT");
+        do {
+            System.out.print("    " + ConsoleColors.DARK_BLUE + "\u2022 " + ConsoleColors.RESET + "Major       : ");
+            try {
+                selection = input.nextInt();
+            } catch(Exception e) {
+                input.nextLine();
+            }
+            if(selection != 1 && selection != 2 && selection != 3) {
+                Menu.printInvalidStament("    " + "Invalid Major!");
+            }
+        } while(selection != 1 && selection != 2 && selection != 3);
+        
+        return (selection == 1) ? "Tourist" : ((selection == 2) ? "IT" : (selection == 3) ? "English" : "IT");
     }
     
-    public static void printStudentInfoForm(String studentName, int birthDay, int birthMonth, int birthYear, boolean gender) {
-        System.out.println(" __________________Student's Info Form__________________");
+    public static void printStudentInfoForm(String studentName, int birthDay, int birthMonth, int birthYear, boolean gender, String major) {
+        System.out.println(" ____________________Student's Info Form____________________");
         System.out.println(" | Full name : " + studentName);
         System.out.println(" | Birthdate : " + birthDay+"/"+birthMonth+"/"+birthYear);
         System.out.println(" | Gender    : " + ((gender) ? "Male" : "Female"));
-        System.out.println(" _______________________________________________________");
+        System.out.println(" | Major     : " + major);
+        System.out.println(" ___________________________________________________________");
     }
     
     
     /**
      *
      * @return
+     * @throws java.io.FileNotFoundException
+     * @throws java.io.UnsupportedEncodingException
      */
-    public static Student addNewStudent() {
+    public static Student addNewStudent() throws FileNotFoundException, UnsupportedEncodingException, IOException {
         int choice;
-        String studentName = "";
+        String fullName = "";
         int birthDay, birthMonth, birthYear;
         boolean gender;
         String major = "";
         
         ValidationHandler.clearConsole();
         System.out.println("\n            - Enter Student's Info -");
-        studentName = StudentInfoAddition.addStudentName();
+        fullName = StudentInfoAddition.addStudentName();
         birthYear   = StudentInfoAddition.addStudentBirthYear();
         birthMonth  = StudentInfoAddition.addStudentBirthMonth();
         birthDay    = StudentInfoAddition.addStudentBirthDay(birthMonth, birthYear);
         Menu.printGenderMenu();
         gender      = (StudentInfoAddition.addStudentGender() == 1); // true is male, false is female
+        Menu.printMajorMenu();
+        major       = StudentInfoAddition.addStudentMajor();
+        //System.out.println(major);
                     
         System.out.println("");
-        StudentInfoAddition.printStudentInfoForm(studentName, birthDay, birthMonth, birthYear, gender);
+        StudentInfoAddition.printStudentInfoForm(fullName, birthDay, birthMonth, birthYear, gender, major);
         System.out.println("");
                     
         Menu.printContinueOption("Do you want to add this student? ");
@@ -162,7 +215,50 @@ public class StudentInfoAddition {
         } else {
             Menu.printFailedNotification("ADD NEW STUDENT FAILED!");
         }
-        Student o = new Student();
-        return o;
+        
+        String firstName = StudentInfoAddition.getFirstName(fullName);
+        String lastName = StudentInfoAddition.getLastName(fullName);
+        
+        
+        BufferedReader br = null;
+        String ID = "";
+        try {
+            br = new BufferedReader(new FileReader("TestID.txt"));
+            
+            String sCurrentLine;
+            while ((sCurrentLine = br.readLine()) != null) {
+                try {
+                    ID = Integer.toString(Integer.parseInt(sCurrentLine) + 1);
+                } catch (Exception e) {
+                    
+                }
+		//System.out.println("cur " + sCurrentLine);
+            }
+        } catch(FileNotFoundException e) {
+            if(br != null) { br.close(); }
+        }
+        
+        System.out.println("id: " + ID);
+        
+        PrintWriter writer = null;
+        try {
+            writer = new PrintWriter("TestID.txt", "UTF-8");
+            writer.print(ID);
+            writer.close();
+        } catch(FileNotFoundException | UnsupportedEncodingException e) {
+            
+        } finally {
+            try {
+                if(writer != null) { writer.close(); }
+            } catch(Exception e) {
+                
+            }
+        }
+        
+        //Student newStudent = new Student();
+        Student newStudent = new Student(ID, lastName, firstName, birthDay, birthMonth, birthYear, gender, major);
+        //Student newStudent = new Student("001", "Nguyen Duc", "Huy", 1, 1, 1999, true, "IT");
+        //System.out.println("new student: " + newStudent);
+        return newStudent;
     }
 }

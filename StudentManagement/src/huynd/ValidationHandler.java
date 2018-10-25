@@ -18,11 +18,18 @@ public class ValidationHandler {
     public static String validateStudentName(String studentName) { 
         studentName = studentName.replaceAll("[^A-Za-z ]+", "");
         studentName = studentName.replaceAll(" +", " ");
+        
+        
+        //studentName = studentName.replaceAll("^(?:[\\p{L}\\p{Mn}\\p{Pd}\\'\\x{2019}]+\\s[\\p{L}\\p{Mn}\\p{Pd}\\'\\x{2019}]+\\s?)+$", "");
         if(studentName.isEmpty()) { return ""; }
         
         if(studentName.charAt(0) == ' ') {
             studentName = studentName.substring(1);
         }
+        if(studentName.charAt( studentName.length() - 1) == ' ' ) {
+            studentName = studentName.substring(0, studentName.length() - 1);
+        }
+        
         studentName = studentName.toLowerCase();
         char[] arr = studentName.toCharArray();
         

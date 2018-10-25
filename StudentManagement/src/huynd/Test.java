@@ -5,6 +5,7 @@
  */
 package huynd;
 
+import huynd.studentInfo.StudentInfoAddition;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
@@ -17,6 +18,8 @@ import java.util.Scanner;
 import java.io.Console;
 import java.io.IOException;
 import java.util.Calendar;
+import phuctt.Student;
+import phuctt.StudentList;
 /**
  *
  * @author Lawliet
@@ -43,7 +46,7 @@ public class Test {
 //        System.out.println(ValidationHandler.isValidateDay(29, 2, 2016));
 //      
         
-        int choice;1
+        int choice;
         
         do {
             System.out.println("");
@@ -51,7 +54,9 @@ public class Test {
             choice = ValidationHandler.getChoice(5);
             switch(choice) {
                 case 1:
-                    StudentInfoAddition.addNewStudent();
+                    Student newStudent = StudentInfoAddition.addNewStudent();
+                    StudentList studentList = new StudentList();
+                    studentList.addStudent(newStudent);
                     break;
             }
         } while (choice != 5);

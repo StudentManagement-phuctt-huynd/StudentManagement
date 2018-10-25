@@ -6,6 +6,7 @@
 package phuctt;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  *
@@ -15,6 +16,7 @@ public class Student {
     private String ID;
     private String lastName;
     private String firstName;
+    private String fullName;
     private int birthDay;
     private int birthMonth;
     private int birthYear;
@@ -44,6 +46,23 @@ public class Student {
         this.gender = gender;
         this.major = major;
         this.subjectList = subjectList;
+    }
+    
+    
+    public Student(String ID, String lastName, String firstName, int birthDay, int birthMonth, int birthYear, boolean gender, String major) {
+        this.ID = ID;
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.fullName = lastName + " " + firstName;
+        this.birthDay = birthDay;
+        this.birthMonth = birthMonth;
+        this.birthYear = birthYear;
+        this.gender = gender;
+        this.major = major;
+        subjectList = new ArrayList<>();
+        this.subjectList.add(new Subject("English"));
+        this.subjectList.add(new Subject("Math"));
+        this.subjectList.add(new Subject("IT"));
     }
 
     @Override

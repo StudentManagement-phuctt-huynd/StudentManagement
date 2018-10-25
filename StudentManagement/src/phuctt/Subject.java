@@ -20,7 +20,11 @@ public class Subject {
 
     public Subject(String subject, double mark) {
         this.subject = subject;
-        this.mark = mark >= 0 ? mark : 0;
+        this.mark = (mark >= 0 || mark <= 10) ? mark : 0;
+    }
+    public Subject(String subject) {
+        this.subject = subject;
+        this.mark = 0;
     }
 
     public String getSubject() {
