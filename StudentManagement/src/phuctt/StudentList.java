@@ -28,6 +28,11 @@ import java.util.TreeSet;
  */
 public class StudentList extends HashMap<String, Student> {
 
+    public StudentList() throws IOException {
+        super(3000);
+        this.readFile();
+    }
+
     private TreeMap<String, Major> majorList = new TreeMap<>();
 
     //read data from file
