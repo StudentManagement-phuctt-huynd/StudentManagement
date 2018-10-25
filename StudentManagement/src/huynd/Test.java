@@ -47,15 +47,14 @@ public class Test {
 //      
         
         int choice;
-        
-        do {
+        StudentList studentList = new StudentList();
+        do {          
             System.out.println("");
             Menu.printAdminMenu();
             choice = ValidationHandler.getChoice(5);
             switch(choice) {
                 case 1:
-                    Student newStudent = StudentInfoAddition.addNewStudent();
-                    StudentList studentList = new StudentList();
+                    Student newStudent = StudentInfoAddition.addNewStudent();                   
                     studentList.addStudent(newStudent);
                     break;
             }

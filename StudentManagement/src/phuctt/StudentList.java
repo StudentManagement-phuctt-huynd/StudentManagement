@@ -183,7 +183,7 @@ public class StudentList extends HashMap<String, Student> {
         return ts;
     }
 
-    public String formatStrFile(Student s, int number) {
+    private String formatStrFile(Student s, int number) {
         String str;
         str = number + "\t";
         str += s.getID() + "\t";
@@ -298,14 +298,12 @@ public class StudentList extends HashMap<String, Student> {
         return super.get(id);
     }
 
+    //getter
     public TreeMap<String, Major> getAllMajorList() {
         return majorList;
     }
-    
-    public Major getMajor(String major) {
-        return majorList.get(major);
-    }
 
+    //get all STUDENT of a majoy pass in this method
     public TreeSet<Student> getMajorList(String major) {
         TreeSet<Student> ts = new TreeSet<>(new Comparator<Student>() {
             @Override
@@ -337,5 +335,14 @@ public class StudentList extends HashMap<String, Student> {
         }
         
         return ts;
+    }
+    
+    public boolean removeStudent(String id) throws IOException {
+        Student s = super.get(id);
+        if (super.remove(id, s)) {
+            writeFile();
+            return true;
+        }
+        return false;
     }
 }
