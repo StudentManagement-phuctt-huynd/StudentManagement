@@ -154,35 +154,6 @@ public class StudentList extends HashMap<String, Student> {
             @Override
             public int compare(Student o1, Student o2) {
                 Collator myCo = Collator.getInstance(new Locale("vi"));
-                /*try {
-                    byte[] o1FNameBytes = o1.getFirstName().getBytes("UTF-8");
-                    String o1FName = new String(o1FNameBytes, "UTF-8");
-
-                    byte[] o2FNameBytes = o2.getFirstName().getBytes("UTF-8");
-                    String o2FName = new String(o2FNameBytes, "UTF-8");
-
-                    byte[] o1LNameBytes = o1.getLastName().getBytes("UTF-8");
-                    String o1LName = new String(o1LNameBytes, "UTF-8");
-
-                    byte[] o2LNameBytes = o2.getLastName().getBytes("UTF-8");
-                    String o2LName = new String(o2LNameBytes, "UTF-8");
-
-                    if (myCo.compare(o1FName, o2FName) > 0) {
-                        return 1;
-                    } else if (myCo.compare(o1FName, o2FName) < 0) {
-                        return -1;
-                    } else {
-                        if (myCo.compare(o1LName, o2LName) > 0) {
-                            return 1;
-                        } else if (myCo.compare(o1LName, o2LName) < 0) {
-                            return -1;
-                        } else {
-                            return 0;
-                        }
-                    }
-                } catch (UnsupportedEncodingException ex) {
-                    Logger.getLogger(StudentList.class.getName()).log(Level.SEVERE, null, ex);
-                }*/
                 if (myCo.compare(o1.getFirstName(), o2.getFirstName()) > 0) {
                     return 1;
                 } else if (myCo.compare(o1.getFirstName(), o2.getFirstName()) < 0) {
