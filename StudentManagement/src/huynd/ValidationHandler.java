@@ -5,6 +5,7 @@
  */
 package huynd;
 
+import huynd.studentInfo.StudentInfoAddition;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Scanner;
@@ -16,12 +17,15 @@ import java.util.Scanner;
 public class ValidationHandler {
     
     public static String validateStudentName(String studentName) { 
-        studentName = studentName.replaceAll("[^A-Za-z ]+", "");
+//        studentName = studentName.replaceAll("[^A-Za-zâầấẫậÂẤăắĂẮ ]+", "");
+        studentName = studentName.replaceAll("[^A-Za-zá-ỹÁ-Ỹ ]+", "");
         studentName = studentName.replaceAll(" +", " ");
         
+        if(studentName.isEmpty() || ValidationHandler.countSpaces(studentName) < 1) { return ""; }
+        if(StudentInfoAddition.getFirstName(studentName).length() < 2 || StudentInfoAddition.getLastName(studentName).length() < 2) {
+            return "";
+        }
         
-        //studentName = studentName.replaceAll("^(?:[\\p{L}\\p{Mn}\\p{Pd}\\'\\x{2019}]+\\s[\\p{L}\\p{Mn}\\p{Pd}\\'\\x{2019}]+\\s?)+$", "");
-        if(studentName.isEmpty()) { return ""; }
         
         if(studentName.charAt(0) == ' ') {
             studentName = studentName.substring(1);
@@ -31,19 +35,30 @@ public class ValidationHandler {
         }
         
         studentName = studentName.toLowerCase();
-        char[] arr = studentName.toCharArray();
         
-         // upper case first character each word
-         arr[0] = Character.toUpperCase(arr[0]);
-         for (int i = 1; i < arr.length; i++) {
-            if(arr[i-1] == ' ') {
-                arr[i] = Character.toUpperCase(arr[i]);
+         // upper case the first character each words
+        studentName = studentName.substring(0, 1).toUpperCase() + studentName.substring(1);
+         for (int i = 1; i < studentName.length(); i++) {
+            if(studentName.charAt(i) == ' ') {
+                studentName = studentName.substring(0, i+1) + studentName.substring(i+1, i+2).toUpperCase() + studentName.substring(i+2);
             }
         }
-         
-         //studentName = Arrays.toString(arr);
-         studentName = String.valueOf(arr);
+        
          return studentName;
+    }
+    private static int countSpaces(String str) {
+        int spaces = 0;
+        for (int i = 0; i < str.length(); i++) {
+            if(str.charAt(i) == ' ') {
+                spaces++;
+            }
+        }
+        return spaces;
+    }
+    public static void makeTextAlignment(int spaces) {
+        for (int i = 0; i < spaces; i++) {
+            System.out.print(" ");
+        }
     }
     
     public static int getChoice(int maxChoice) {
