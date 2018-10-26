@@ -36,7 +36,12 @@ public class StudentInfoSearching {
     public static Student searchStudent() throws Exception {
         StudentList searchedStudentList = new StudentList();
         String searchedStudentID = StudentInfoSearching.enterSearchedStudent();
-        Student searchedStudent = searchedStudentList.findbyId(searchedStudentID);
+        Student searchedStudent;
+        try {
+            searchedStudent = searchedStudentList.findbyId(searchedStudentID);
+        } catch(Exception e) {
+            return null;
+        }
         
         return searchedStudent;
     }

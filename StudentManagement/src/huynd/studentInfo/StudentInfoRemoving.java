@@ -32,10 +32,11 @@ public class StudentInfoRemoving {
      * @return
      * @throws Exception
      */
-    public static boolean removeStudent() throws Exception {
+    public static boolean removeStudent(String removedStudentID) throws Exception {
         StudentList studentList = new StudentList();
-        String removedStudentID = StudentInfoRemoving.enterRemovedIDStudent();
+        //String removedStudentID = StudentInfoRemoving.enterRemovedIDStudent();
         
         return studentList.removeStudent(removedStudentID);
     }
+
 }

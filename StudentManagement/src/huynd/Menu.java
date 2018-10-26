@@ -52,10 +52,10 @@ public class Menu {
         System.out.println("    " + ConsoleColors.YELLOW + "\u2022 " + ConsoleColors.RESET + title + "1. Yes    2. No");
     }
     public static void printSuccessNotification(String title) {
-        System.out.println("    " + ConsoleColors.GREEN + title + ConsoleColors.RESET);
+        System.out.println("    " + ConsoleColors.GREEN + "\u2713 " + title + ConsoleColors.RESET);
     }
     public static void printFailedNotification(String title) {
-        System.out.println("    " + ConsoleColors.RED + title + ConsoleColors.RESET);
+        System.out.println("    " + ConsoleColors.RED + "\u2716 " + title + ConsoleColors.RESET);
     }
     
 }

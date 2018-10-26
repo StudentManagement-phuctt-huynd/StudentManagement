@@ -22,7 +22,7 @@ import phuctt.Student;
  * @author Lawliet
  */
 public class StudentInfoAddition {
-    private static String addStudentName()  {
+    public static String addStudentName()  {
         Scanner input = new Scanner(System.in, "utf-8");
         String fullName = "";
         
@@ -67,7 +67,7 @@ public class StudentInfoAddition {
     }
     
     
-    private static int addStudentBirthYear() {
+    public static int addStudentBirthYear() {
         Scanner input = new Scanner(System.in);
         int birthYear = -1;
         
@@ -86,7 +86,7 @@ public class StudentInfoAddition {
         
         return birthYear;
     }
-    private static int addStudentBirthMonth() {
+    public static int addStudentBirthMonth() {
         Scanner input = new Scanner(System.in);
         int birthMonth = -1;
         
@@ -106,7 +106,7 @@ public class StudentInfoAddition {
         
         return birthMonth;
     }
-    private static int addStudentBirthDay(int birthMonth, int birthYear) {
+    public static int addStudentBirthDay(int birthMonth, int birthYear) {
         Scanner input = new Scanner(System.in);
         int birthDay = -1;
         
@@ -125,7 +125,7 @@ public class StudentInfoAddition {
         
         return birthDay;
     }
-    private static int addStudentGender() {
+    public static int addStudentGender() {
         Scanner input = new Scanner(System.in);
         int gender = -1;
         
@@ -143,7 +143,7 @@ public class StudentInfoAddition {
         
         return gender; // male is true(data type)
     }
-    private static String addStudentMajor() {
+    public static String addStudentMajor() {
         Scanner input = new Scanner(System.in);
         int selection = -1;
         
@@ -223,24 +223,6 @@ public class StudentInfoAddition {
         major       = StudentInfoAddition.addStudentMajor();
         //System.out.println(major);
                     
-        System.out.println("");
-        StudentMenu.printStudentInfoForm(fullName, birthDay, birthMonth, birthYear, gender, major);
-        System.out.println("");
-                    
-        Menu.printContinueOption("Do you want to add this student? ");
-        Menu.printUserChoice();
-                    
-        choice = ValidationHandler.getChoice(2);
-        if(choice == 1) {
-            Menu.printSuccessNotification("ADD NEW STUDENT SUCCESSFUL!");
-        } else {
-            Menu.printFailedNotification("ADD NEW STUDENT FAILED!");
-            return null;
-        }
-        
-        String firstName = StudentInfoAddition.getFirstName(fullName);
-        String lastName = StudentInfoAddition.getLastName(fullName);
-        
         
         BufferedReader br = null;
         String ID = "";
@@ -260,7 +242,29 @@ public class StudentInfoAddition {
             if(br != null) { br.close(); }
         }
         
-        System.out.println("id: " + ID);
+        
+        System.out.println("");
+        StudentMenu.printStudentInfoForm(fullName, ID, birthDay, birthMonth, birthYear, gender, major);
+        System.out.println("");
+                    
+        Menu.printContinueOption("Do you want to add this student? ");
+        Menu.printUserChoice();
+                    
+        choice = ValidationHandler.getChoice(2);
+        if(choice == 1) {
+            Menu.printSuccessNotification("ADD NEW STUDENT SUCCESSFUL!");
+        } else {
+            Menu.printFailedNotification("ADD NEW STUDENT FAILED!");
+            return null;
+        }
+        
+        String firstName = StudentInfoAddition.getFirstName(fullName);
+        String lastName = StudentInfoAddition.getLastName(fullName);
+        
+        
+        
+        
+        //System.out.println("id: " + ID);
         
         PrintWriter writer = null;
         try {
