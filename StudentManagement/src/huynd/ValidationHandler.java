@@ -36,10 +36,10 @@ public class ValidationHandler {
         
         String[] subString = studentName.split(" ");
         for (int i = 0; i <= spaces; i++) {
-            if (StringHandler.countVowel(subString[i]) < 2 && StringHandler.countConsonant(subString[i]) < 2 && subString[i].length() >= 5) { return ""; }
+            if ( (StringHandler.countVowel(subString[i]) < 2 || StringHandler.countConsonant(subString[i]) < 2) && subString[i].length() >= 5) { return ""; }
+            else if ( (StringHandler.countVowel(subString[i]) < 1 || StringHandler.countConsonant(subString[i]) < 1) && subString[i].length() >= 3) { return ""; }
             else if (StringHandler.countVowel(subString[i]) < 1 && StringHandler.countConsonant(subString[i]) < 1 && subString[i].length() >= 2) { return ""; }
             else if (StringHandler.countVowel(subString[i]) < 1 && subString[i].length() == 1) { return ""; }
-                System.out.println("Vowel: " + StringHandler.countVowel(subString[i]));
         }
         
         
