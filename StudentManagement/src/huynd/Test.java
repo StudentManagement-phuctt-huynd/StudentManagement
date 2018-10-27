@@ -21,6 +21,8 @@ import java.util.Scanner;
 import java.io.Console;
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.Iterator;
+import java.util.TreeSet;
 import phuctt.Student;
 import phuctt.StudentList;
 /**
@@ -36,29 +38,16 @@ public class Test {
         do {          
             System.out.println("");
             Menu.printAdminMenu();
-            choice = ValidationHandler.getChoice(5);
+            choice = ValidationHandler.getChoice(4);
             switch(choice) {
                 case 1:
                     Student newStudent = StudentInfoAddition.addNewStudent();                   
                     if(newStudent != null) { studentList.addStudent(newStudent); }
-                    Thread.sleep(1500);
+                    Thread.sleep(1000);
                     break;
                 case 2:
-                    break;
-                case 3:
-//                    System.out.println("\n            - Enter Student's ID -");
-//                    System.out.print("    Remove: ");
-//                    if(StudentInfoRemoving.removeStudent()) {
-//                        Menu.printSuccessNotification("REMOVED SUCCESSFUL");
-//                    } else {
-//                        Menu.printFailedNotification("INVALID ID!");
-//                    }
-//                    Menu.printContinueOption("Do you want continue? ");
-                    
-                    break;
-                case 4:
                     System.out.println("\n            - Enter Student's ID -");
-                    System.out.print("    " + "Search: ");// 2315
+                    System.out.print("    " + "\u2315 Search: ");// 2315
                     Student searchedStudent = StudentInfoSearching.searchStudent();
                     if(searchedStudent != null) {
                         StudentMenu.printStudentInfoForm(searchedStudent.getFullName(),
@@ -68,18 +57,18 @@ public class Test {
                                                         searchedStudent.getBirthYear(),
                                                         searchedStudent.getGender(),
                                                         searchedStudent.getMajor());
-                        System.out.println("    " + ConsoleColors.YELLOW + "\u2022 " + ConsoleColors.RESET + "Chooose option: 1. Edit  2.Remove");
+                        System.out.println("    " + ConsoleColors.YELLOW + "\u2022 " + ConsoleColors.RESET + "Chooose option: 1. \u270E Edit  2. \u2212 Remove  3. \u21E4 Back");
                         Menu.printUserChoice();
-                        choice = ValidationHandler.getChoice(5);
+                        choice = ValidationHandler.getChoice(3);
                         switch (choice) {
                             case 1:
-                                System.out.println("    " + "Edit: " + "1. Name");
-                                System.out.println("    " + "      " + "2. BirthDate");
-                                System.out.println("    " + "      " + "3. Gender");
-                                System.out.println("    " + "      " + "4. Major");
-                                System.out.println("    " + "      " + "5. Mark");
+                                System.out.println("    " + "\u270E Edit: " + "1. Name");
+                                System.out.println("    " + "        " + "2. BirthDate");
+                                System.out.println("    " + "        " + "3. Gender");
+                                System.out.println("    " + "        " + "4. Major");
+                                System.out.println("    " + "        " + "5. Mark");
                                 Menu.printUserChoice();
-                                choice = ValidationHandler.getChoice(4);
+                                choice = ValidationHandler.getChoice(5);
                                 switch (choice) {
                                     case 1:
                                         //System.out.println("    " + "New student name: ");
@@ -134,16 +123,20 @@ public class Test {
                                     Menu.printFailedNotification("INVALID ID!");
                                 }
                                     break;
+                            case 3: 
+                                break;
                         }
                     } else {
                         Menu.printFailedNotification("NOT FOUND!");
                     }
-                    Thread.sleep(1500);
+                    Thread.sleep(1000);
+                    break;
+                case 3:
+                    StudentMenu.printStudentsList(studentList);
                     break;
             }
-        } while (choice != 5);
-        System.out.println("end");
-        
-        
+        } while (choice != 4);
+        System.out.println("    " + "\u270B Good Bye. See You Again!!! \u270B"); // 263a
+        Thread.sleep(1000);
     }
 }
