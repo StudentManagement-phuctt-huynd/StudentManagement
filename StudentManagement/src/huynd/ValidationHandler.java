@@ -17,11 +17,11 @@ import java.util.Scanner;
 public class ValidationHandler {
     
     public static String validateStudentName(String studentName) { 
-//        studentName = studentName.replaceAll("[^A-Za-zâầấẫậÂẤăắĂẮ ]+", "");
         studentName = studentName.replaceAll("[^A-Za-zá-ỹÁ-Ỹ ]+", "");
         studentName = studentName.replaceAll(" +", " ");
         
-        if(studentName.isEmpty() || ValidationHandler.countSpaces(studentName) < 1) { return ""; }
+        int spaces = StringHandler.countSpaces(studentName);
+        if(studentName.isEmpty() || spaces < 1) { return ""; }
         if(StudentInfoAddition.getFirstName(studentName).length() < 2 || StudentInfoAddition.getLastName(studentName).length() < 2) {
             return "";
         }
@@ -34,7 +34,18 @@ public class ValidationHandler {
             studentName = studentName.substring(0, studentName.length() - 1);
         }
         
+        String[] subString = studentName.split(" ");
+        for (int i = 0; i <= spaces; i++) {
+            if (StringHandler.countVowel(subString[i]) < 2 && StringHandler.countConsonant(subString[i]) < 2 && subString[i].length() >= 5) { return ""; }
+            else if (StringHandler.countVowel(subString[i]) < 1 && StringHandler.countConsonant(subString[i]) < 1 && subString[i].length() >= 2) { return ""; }
+            else if (StringHandler.countVowel(subString[i]) < 1 && subString[i].length() == 1) { return ""; }
+                System.out.println("Vowel: " + StringHandler.countVowel(subString[i]));
+        }
+        
+        
+        System.out.println("");
         studentName = studentName.toLowerCase();
+        
         
          // upper case the first character each words
         studentName = studentName.substring(0, 1).toUpperCase() + studentName.substring(1);
@@ -46,15 +57,7 @@ public class ValidationHandler {
         
          return studentName;
     }
-    private static int countSpaces(String str) {
-        int spaces = 0;
-        for (int i = 0; i < str.length(); i++) {
-            if(str.charAt(i) == ' ') {
-                spaces++;
-            }
-        }
-        return spaces;
-    }
+    
     public static void makeTextAlignment(int spaces) {
         for (int i = 0; i < spaces; i++) {
             System.out.print(" ");
