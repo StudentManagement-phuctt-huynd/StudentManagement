@@ -162,41 +162,23 @@ public class StudentInfoAddition {
         return (selection == 1) ? "Tourist" : ((selection == 2) ? "IT" : (selection == 3) ? "English" : "IT");
     }
     
-//    public static void printStudentInfoForm(String studentName, int birthDay, int birthMonth, int birthYear, boolean gender, String major) {
-//        String formTitle = " _____________________Student's Info Form_____________________";
-//        String fullNameTitle = " | Full name : ";
-//        String birthDayTitle = " | Birthdate : ";
-//        String birthDayStr   = String.valueOf(birthDay); 
-//        String birthMonthStr = String.valueOf(birthMonth); 
-//        String birthYearStr  = String.valueOf(birthYear); 
-//        String genderTitle   = " | Gender    : ";
-//        String genderStr     = ((gender) ? "Male" : "Female");
-//        String majorTitle    = " | Major     : ";
-//        
-//       
-//        System.out.println(" " + formTitle);
-//        System.out.print(fullNameTitle + studentName);
-//        ValidationHandler.makeTextAlignment(formTitle.length() - fullNameTitle.length() - studentName.length());
-//        System.out.println(" |");
-//        
-//        //System.out.println(" | Birthdate : " + birthDay+"/"+birthMonth+"/"+birthYear);
-//        System.out.print(birthDayTitle + birthDayStr + "/" + birthMonthStr + "/" + birthYearStr);
-//        ValidationHandler.makeTextAlignment(formTitle.length() - birthDayTitle.length() - birthDayStr.length()-birthMonthStr.length()-birthYearStr.length() - 2 );
-//        System.out.println(" |");
-//        
-//        //System.out.println(" | Gender    : " + ((gender) ? "Male" : "Female"));
-//        System.out.print(genderTitle + genderStr);
-//        ValidationHandler.makeTextAlignment(formTitle.length() - genderTitle.length() - genderStr.length());
-//        System.out.println(" |");
-//        
-//        //System.out.println(" | Major     : " + major);
-//        System.out.print(majorTitle + major);
-//        ValidationHandler.makeTextAlignment(formTitle.length() - majorTitle.length() - major.length());
-//        System.out.println(" |");
-//        
-//        System.out.println(" |_____________________________________________________________|");
-//    }
-    
+    public static double addMark() {
+        Scanner input = new Scanner(System.in);
+        double mark = -1.0;
+        do {
+            System.out.print("    " + ConsoleColors.DARK_BLUE + "\u2022 " + ConsoleColors.RESET + "Mark        : ");
+            try {
+                mark = input.nextDouble();
+            } catch(Exception e) {
+                input.nextLine();
+            }
+            if(mark < 0 || mark > 10) {
+                Menu.printInvalidStament("    " + "Invalid Mark!");
+            }
+        } while(mark < 0 || mark > 10);
+        
+        return mark;
+    }
     
     /**
      *
@@ -244,7 +226,7 @@ public class StudentInfoAddition {
         
         
         System.out.println("");
-        StudentMenu.printStudentInfoForm(fullName, ID, birthDay, birthMonth, birthYear, gender, major);
+        StudentMenu.printStudentInfoForm(fullName, ID, birthDay, birthMonth, birthYear, gender, major, -1.0, -1.0, -1.0);
         System.out.println("");
                     
         Menu.printContinueOption("Do you want to add this student? ");

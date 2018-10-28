@@ -31,7 +31,8 @@ public class Menu {
         System.out.println(ConsoleColors.DARK_BLUE + "    1. \u2795 Add new student" + ConsoleColors.RESET);
         System.out.println(ConsoleColors.DARK_BLUE + "    2. \u2315 Search student" + ConsoleColors.RESET);
         System.out.println(ConsoleColors.DARK_BLUE + "    3. \u2635 List students" + ConsoleColors.RESET);
-        System.out.println(ConsoleColors.DARK_BLUE + "    4. \u21E4 Exit" + ConsoleColors.RESET);
+        System.out.println(ConsoleColors.DARK_BLUE + "    4. \u25A6 Statistical table" + ConsoleColors.RESET);
+        System.out.println(ConsoleColors.DARK_BLUE + "    5. \u21E4 Exit" + ConsoleColors.RESET);
         Menu.printLine();
         Menu.printUserChoice();
     }

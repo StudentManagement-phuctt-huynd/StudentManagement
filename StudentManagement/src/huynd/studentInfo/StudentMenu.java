@@ -20,7 +20,7 @@ import phuctt.StudentList;
  * @author Lawliet
  */
 public class StudentMenu {
-    public static void printStudentInfoForm(String studentName, String ID, int birthDay, int birthMonth, int birthYear, boolean gender, String major) {
+    public static void printStudentInfoForm(String studentName, String ID, int birthDay, int birthMonth, int birthYear, boolean gender, String major, double englishMark, double mathMark, double ITMark) {
         String formTitle = " _____________________Student's Info Form_____________________";
         String fullNameTitle = " | \u2115 Full name : ";
         String IDTitle       = " | \u2605 ID        : ";
@@ -47,6 +47,7 @@ public class StudentMenu {
         String genderTitle   = " | \u26A5 Gender    : ";
         String genderStr     = ((gender) ? "Male" : "Female");
         String majorTitle    = " | \u25A4 Major     : "; // 2cb6
+        String markTitle     = " | \u2133 Mark      : ";
         
        
         System.out.println(" " + formTitle);
@@ -69,6 +70,29 @@ public class StudentMenu {
         System.out.print(majorTitle + major);
         ValidationHandler.makeTextAlignment(formTitle.length() - majorTitle.length() - major.length());
         System.out.println(" |");
+        
+        
+        if(englishMark >= 0 || mathMark >= 0 || ITMark >= 0) {
+        String englishMarkTitle = "+ English : ";
+        String mathMarkTitle    = "+ Math    : ";
+        String ITMarkTitle      = "+ IT      : ";
+        
+        System.out.print(markTitle + englishMarkTitle + englishMark);
+        ValidationHandler.makeTextAlignment(formTitle.length() - markTitle.length() - englishMarkTitle.length() - String.valueOf(englishMark).length());
+        System.out.println(" |");
+        
+        System.out.print(" |");
+        ValidationHandler.makeTextAlignment(markTitle.length() - 1);
+        System.out.print(mathMarkTitle + mathMark);
+        ValidationHandler.makeTextAlignment(formTitle.length() - markTitle.length() - 1 - mathMarkTitle.length() - String.valueOf(mathMark).length());
+        System.out.println(" |");
+        
+        System.out.print(" |");
+        ValidationHandler.makeTextAlignment(markTitle.length() - 1);
+        System.out.print(ITMarkTitle + ITMark);
+        ValidationHandler.makeTextAlignment(formTitle.length() - markTitle.length() - 1 - ITMarkTitle.length() - String.valueOf(ITMark).length());
+        System.out.println(" |");
+        }
         
         System.out.println(" |_____________________________________________________________|");
     }

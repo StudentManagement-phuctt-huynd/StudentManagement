@@ -29,7 +29,7 @@ public class Test {
         do {          
             System.out.println("");
             Menu.printAdminMenu();
-            choice = ValidationHandler.getChoice(4);
+            choice = ValidationHandler.getChoice(5);
             switch(choice) {
                 case 1:
                     Student newStudent = StudentInfoAddition.addNewStudent();                   
@@ -47,7 +47,10 @@ public class Test {
                                                         searchedStudent.getBirthMonth(),
                                                         searchedStudent.getBirthYear(),
                                                         searchedStudent.getGender(),
-                                                        searchedStudent.getMajor());
+                                                        searchedStudent.getMajor(),
+                                                        searchedStudent.getSubjectList().get(0).getMark(),
+                                                        searchedStudent.getSubjectList().get(1).getMark(),
+                                                        searchedStudent.getSubjectList().get(2).getMark());
                         System.out.println("    " + ConsoleColors.YELLOW + "\u2022 " + ConsoleColors.RESET + "Chooose option: 1. \u270E Edit  2. \u2212 Remove  3. \u21E4 Back");
                         Menu.printUserChoice();
                         choice = ValidationHandler.getChoice(3);
@@ -62,7 +65,6 @@ public class Test {
                                 selection = ValidationHandler.getChoice(5);
                                 switch (selection) {
                                     case 1:
-                                        //System.out.println("    " + "New student name: ");
                                         System.out.println("\n            - Enter new Student's name -");
                                         String newStudentFullName = StudentInfoAddition.addStudentName();
                                         
@@ -70,8 +72,6 @@ public class Test {
                                         &&  studentList.editLastName(StudentInfoAddition.getLastName(newStudentFullName), searchedStudent.getID())) {
                                             Menu.printSuccessNotification("Edit Successful!");
                                         }
-                                        //studentList.editFirstName(newStudentFullName, searchedStudent.getID());
-                                        //studentList.editLastName(newStudentFullName, searchedStudent.getID());
                                         break;
                                     case 2:
                                         System.out.println("\n            - Enter new Student's birthdate -");
@@ -99,7 +99,27 @@ public class Test {
                                         }
                                         break;
                                     case 5:
+                                        System.out.println("");
+                                        System.out.println("    " + "1. English");
+                                        System.out.println("    " + "2. Math");
+                                        System.out.println("    " + "3. IT");
+                                        Menu.printUserChoice();
+                                        selection = ValidationHandler.getChoice(3);
                                         System.out.println("\n            - Enter new Student's mark -");
+                                        double newMark = StudentInfoAddition.addMark();
+                                        switch (selection) {
+                                            case 1:
+                                                studentList.editMark("English", searchedStudent.getID(), newMark);
+                                                break;
+                                            case 2:
+                                                studentList.editMark("Math", searchedStudent.getID(), newMark);
+                                                break;
+                                            case 3:
+                                                studentList.editMark("IT", searchedStudent.getID(), newMark);
+                                                break;
+                                            default:
+                                                throw new AssertionError();
+                                        }
                                         break;
                                     default:
                                         throw new AssertionError();
@@ -128,7 +148,7 @@ public class Test {
                     System.out.println("    " + "       " + "4. Tourist");
                     Menu.printUserChoice();
                     selection = ValidationHandler.getChoice(4);
-                    System.out.println("    ID              Full Name               Birthday    Gender     Major    English    Math     IT");
+                    System.out.println("    ID               Full Name              Birthday    Gender      Major   English    Math     IT");
                     System.out.println("------------------------------------------------------------------------------------------------------");
                     switch (selection) {
                         case 1: StudentMenu.printAllStudentsList(studentList); break;
@@ -139,8 +159,18 @@ public class Test {
                             throw new AssertionError();
                     }
                     break;
+                case 4:
+                    System.out.println("");
+                    System.out.println("----------------------------");
+                    System.out.println("    " + "English : " + studentList.getMajorList("English").size());
+//                    System.out.println("    " + "Math    : " + studentList.getMajorList("Math").size());
+                    System.out.println("    " + "Math    : " + (studentList.size() - studentList.getMajorList("English").size() - studentList.getMajorList("IT").size()) );
+                    System.out.println("    " + "IT      : " + studentList.getMajorList("IT").size());
+                    System.out.println("    " + "Total   : " + studentList.size());
+                    System.out.println("----------------------------");
+                    break;
             }
-        } while (choice != 4);
+        } while (choice != 5);
         System.out.println("    " + "\u270B Good Bye. See You Again!!! \u270B"); // 263a
         Thread.sleep(1000);
     }
