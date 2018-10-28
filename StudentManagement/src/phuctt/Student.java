@@ -147,7 +147,9 @@ public class Student {
     }
     
     public String getBirthdate() {
-        return this.birthDay+ "/" +this.birthMonth+ "/" +this.birthYear;
+        return ((this.birthDay < 10) ? "0" + this.birthDay : this.birthDay) + "/" + 
+                ((this.birthMonth < 10) ? "0" + this.birthMonth : this.birthMonth) + "/" + 
+                this.birthYear;
     }
     
     public void setBirthdate(String birthdate) {

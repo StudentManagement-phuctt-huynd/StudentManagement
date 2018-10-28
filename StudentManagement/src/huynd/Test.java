@@ -34,6 +34,7 @@ public class Test {
 
     public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException, IOException, InterruptedException, Exception {
         int choice;
+        int selection;
         StudentList studentList = new StudentList();
         do {          
             System.out.println("");
@@ -68,8 +69,8 @@ public class Test {
                                 System.out.println("    " + "        " + "4. Major");
                                 System.out.println("    " + "        " + "5. Mark");
                                 Menu.printUserChoice();
-                                choice = ValidationHandler.getChoice(5);
-                                switch (choice) {
+                                selection = ValidationHandler.getChoice(5);
+                                switch (selection) {
                                     case 1:
                                         //System.out.println("    " + "New student name: ");
                                         System.out.println("\n            - Enter new Student's name -");
@@ -132,7 +133,22 @@ public class Test {
                     Thread.sleep(1000);
                     break;
                 case 3:
-                    StudentMenu.printStudentsList(studentList);
+                    System.out.println("    " + "List :" + "1. All");
+                    System.out.println("    " + "      " + "2. IT");
+                    System.out.println("    " + "      " + "3. English");
+                    System.out.println("    " + "      " + "4. Tourist");
+                    Menu.printUserChoice();
+                    selection = ValidationHandler.getChoice(4);
+                    switch (selection) {
+                        case 1: break;
+                        case 2: StudentMenu.printStudentsList(studentList, "IT"); break;
+                        case 3: StudentMenu.printStudentsList(studentList, "English"); break;
+                        case 4: StudentMenu.printStudentsList(studentList, "Tourist"); break;
+                        default:
+                            throw new AssertionError();
+                    }
+                    //StudentMenu.printStudentsList(studentList, "IT");
+                    //StudentMenu.printAllStudentsList(studentList);
                     break;
             }
         } while (choice != 4);

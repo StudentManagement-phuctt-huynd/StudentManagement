@@ -22,7 +22,7 @@ public class ValidationHandler {
         
         int spaces = StringHandler.countSpaces(studentName);
         if(studentName.isEmpty() || spaces < 1) { return ""; }
-        if(StudentInfoAddition.getFirstName(studentName).length() < 2 || StudentInfoAddition.getLastName(studentName).length() < 2) {
+        if(StudentInfoAddition.getFirstName(studentName).length() < 1 || StudentInfoAddition.getLastName(studentName).length() < 2) {
             return "";
         }
         
@@ -36,14 +36,13 @@ public class ValidationHandler {
         
         String[] subString = studentName.split(" ");
         for (int i = 0; i <= spaces; i++) {
-            if ( (StringHandler.countVowel(subString[i]) < 2 || StringHandler.countConsonant(subString[i]) < 2) && subString[i].length() >= 5) { return ""; }
+            if ( (StringHandler.countVowel(subString[i]) < 1 || StringHandler.countConsonant(subString[i]) < 2) && subString[i].length() >= 5) { return ""; }
             else if ( (StringHandler.countVowel(subString[i]) < 1 || StringHandler.countConsonant(subString[i]) < 1) && subString[i].length() >= 3) { return ""; }
             else if (StringHandler.countVowel(subString[i]) < 1 && StringHandler.countConsonant(subString[i]) < 1 && subString[i].length() >= 2) { return ""; }
             else if (StringHandler.countVowel(subString[i]) < 1 && subString[i].length() == 1) { return ""; }
         }
         
         
-        System.out.println("");
         studentName = studentName.toLowerCase();
         
         
