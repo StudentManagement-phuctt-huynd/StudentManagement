@@ -6,10 +6,7 @@
 package huynd.studentInfo;
 
 import huynd.ConsoleColors;
-import huynd.ConsoleColors;
 import huynd.Menu;
-import huynd.Menu;
-import huynd.ValidationHandler;
 import huynd.ValidationHandler;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -46,10 +43,9 @@ public class StudentInfoAddition {
     }
     public static String getFirstName(String fullName) {
         String firstName = "";
-        char[] arr = fullName.toCharArray();
         
         for (int i = (int)(fullName.length()) - 1; i >= 0; i--) {
-            if(arr[i] == ' ') {
+            if(fullName.charAt(i) == ' ') {
                 firstName = fullName.substring(i + 1);
                 break;
             }
@@ -59,10 +55,9 @@ public class StudentInfoAddition {
     }
     public static String getLastName(String fullName) {
         String lastName = "";
-        char[] arr = fullName.toCharArray();
         
         for (int i = (int)(fullName.length()) - 1; i >= 0; i--) {
-            if(arr[i] == ' ') {
+            if(fullName.charAt(i) == ' ') {
                 lastName = fullName.substring(0, i);
                 break;
             }
@@ -167,14 +162,40 @@ public class StudentInfoAddition {
         return (selection == 1) ? "Tourist" : ((selection == 2) ? "IT" : (selection == 3) ? "English" : "IT");
     }
     
-    public static void printStudentInfoForm(String studentName, int birthDay, int birthMonth, int birthYear, boolean gender, String major) {
-        System.out.println(" ____________________Student's Info Form____________________");
-        System.out.println(" | Full name : " + studentName);
-        System.out.println(" | Birthdate : " + birthDay+"/"+birthMonth+"/"+birthYear);
-        System.out.println(" | Gender    : " + ((gender) ? "Male" : "Female"));
-        System.out.println(" | Major     : " + major);
-        System.out.println(" ___________________________________________________________");
-    }
+//    public static void printStudentInfoForm(String studentName, int birthDay, int birthMonth, int birthYear, boolean gender, String major) {
+//        String formTitle = " _____________________Student's Info Form_____________________";
+//        String fullNameTitle = " | Full name : ";
+//        String birthDayTitle = " | Birthdate : ";
+//        String birthDayStr   = String.valueOf(birthDay); 
+//        String birthMonthStr = String.valueOf(birthMonth); 
+//        String birthYearStr  = String.valueOf(birthYear); 
+//        String genderTitle   = " | Gender    : ";
+//        String genderStr     = ((gender) ? "Male" : "Female");
+//        String majorTitle    = " | Major     : ";
+//        
+//       
+//        System.out.println(" " + formTitle);
+//        System.out.print(fullNameTitle + studentName);
+//        ValidationHandler.makeTextAlignment(formTitle.length() - fullNameTitle.length() - studentName.length());
+//        System.out.println(" |");
+//        
+//        //System.out.println(" | Birthdate : " + birthDay+"/"+birthMonth+"/"+birthYear);
+//        System.out.print(birthDayTitle + birthDayStr + "/" + birthMonthStr + "/" + birthYearStr);
+//        ValidationHandler.makeTextAlignment(formTitle.length() - birthDayTitle.length() - birthDayStr.length()-birthMonthStr.length()-birthYearStr.length() - 2 );
+//        System.out.println(" |");
+//        
+//        //System.out.println(" | Gender    : " + ((gender) ? "Male" : "Female"));
+//        System.out.print(genderTitle + genderStr);
+//        ValidationHandler.makeTextAlignment(formTitle.length() - genderTitle.length() - genderStr.length());
+//        System.out.println(" |");
+//        
+//        //System.out.println(" | Major     : " + major);
+//        System.out.print(majorTitle + major);
+//        ValidationHandler.makeTextAlignment(formTitle.length() - majorTitle.length() - major.length());
+//        System.out.println(" |");
+//        
+//        System.out.println(" |_____________________________________________________________|");
+//    }
     
     
     /**
@@ -202,23 +223,6 @@ public class StudentInfoAddition {
         major       = StudentInfoAddition.addStudentMajor();
         //System.out.println(major);
                     
-        System.out.println("");
-        StudentInfoAddition.printStudentInfoForm(fullName, birthDay, birthMonth, birthYear, gender, major);
-        System.out.println("");
-                    
-        Menu.printContinueOption("Do you want to add this student? ");
-        Menu.printUserChoice();
-                    
-        choice = ValidationHandler.getChoice(2);
-        if(choice == 1) {
-            Menu.printSuccessNotification("ADD NEW STUDENT SUCCESSFUL!");
-        } else {
-            Menu.printFailedNotification("ADD NEW STUDENT FAILED!");
-        }
-        
-        String firstName = StudentInfoAddition.getFirstName(fullName);
-        String lastName = StudentInfoAddition.getLastName(fullName);
-        
         
         BufferedReader br = null;
         String ID = "";
@@ -238,7 +242,29 @@ public class StudentInfoAddition {
             if(br != null) { br.close(); }
         }
         
-        System.out.println("id: " + ID);
+        
+        System.out.println("");
+        StudentMenu.printStudentInfoForm(fullName, ID, birthDay, birthMonth, birthYear, gender, major);
+        System.out.println("");
+                    
+        Menu.printContinueOption("Do you want to add this student? ");
+        Menu.printUserChoice();
+                    
+        choice = ValidationHandler.getChoice(2);
+        if(choice == 1) {
+            Menu.printSuccessNotification("ADD NEW STUDENT SUCCESSFUL!");
+        } else {
+            Menu.printFailedNotification("ADD NEW STUDENT FAILED!");
+            return null;
+        }
+        
+        String firstName = StudentInfoAddition.getFirstName(fullName);
+        String lastName = StudentInfoAddition.getLastName(fullName);
+        
+        
+        
+        
+        //System.out.println("id: " + ID);
         
         PrintWriter writer = null;
         try {
@@ -255,10 +281,7 @@ public class StudentInfoAddition {
             }
         }
         
-        //Student newStudent = new Student();
         Student newStudent = new Student(ID, lastName, firstName, birthDay, birthMonth, birthYear, gender, major);
-        //Student newStudent = new Student("001", "Nguyen Duc", "Huy", 1, 1, 1999, true, "IT");
-        //System.out.println("new student: " + newStudent);
         return newStudent;
     }
 }

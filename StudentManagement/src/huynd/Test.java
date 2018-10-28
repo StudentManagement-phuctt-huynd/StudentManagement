@@ -6,6 +6,9 @@
 package huynd;
 
 import huynd.studentInfo.StudentInfoAddition;
+import huynd.studentInfo.StudentInfoRemoving;
+import huynd.studentInfo.StudentInfoSearching;
+import huynd.studentInfo.StudentMenu;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
@@ -18,6 +21,8 @@ import java.util.Scanner;
 import java.io.Console;
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.Iterator;
+import java.util.TreeSet;
 import phuctt.Student;
 import phuctt.StudentList;
 /**
@@ -27,40 +32,127 @@ import phuctt.StudentList;
 public class Test {
 
 
-    public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException, IOException {
-//        Scanner reader = new Scanner(System.in, "utf-8");  // Reading from System.in
-//        System.out.println("Enter a number: ");
-//        String n = reader.nextLine(); // Scans the next token of the input as an int.
-//        
-//        PrintWriter writer = new PrintWriter("the-file-name.txt", "UTF-8");
-//        writer.println(n);
-//        writer.close();
-//        
-//        
-//        System.out.println(ValidationHandler.validateStudentName(n));
-//        //once finished
-//        reader.close();
-//        
-//        //System.out.println(ValidationHandler.validateStudentName("Nguyễn   duc huy"));
-//        System.out.println(ValidationHandler.isLeafYear(2021));
-//        System.out.println(ValidationHandler.isValidateDay(29, 2, 2016));
-//      
-        
+    public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException, IOException, InterruptedException, Exception {
         int choice;
+        int selection;
         StudentList studentList = new StudentList();
         do {          
             System.out.println("");
             Menu.printAdminMenu();
-            choice = ValidationHandler.getChoice(5);
+            choice = ValidationHandler.getChoice(4);
             switch(choice) {
                 case 1:
                     Student newStudent = StudentInfoAddition.addNewStudent();                   
-                    studentList.addStudent(newStudent);
+                    if(newStudent != null) { studentList.addStudent(newStudent); }
+                    Thread.sleep(1000);
+                    break;
+                case 2:
+                    System.out.println("\n            - Enter Student's ID -");
+                    System.out.print("    " + "\u2315 Search: ");// 2315
+                    Student searchedStudent = StudentInfoSearching.searchStudent();
+                    if(searchedStudent != null) {
+                        StudentMenu.printStudentInfoForm(searchedStudent.getFullName(),
+                                                        searchedStudent.getID(),
+                                                        searchedStudent.getBirthDay(),
+                                                        searchedStudent.getBirthMonth(),
+                                                        searchedStudent.getBirthYear(),
+                                                        searchedStudent.getGender(),
+                                                        searchedStudent.getMajor());
+                        System.out.println("    " + ConsoleColors.YELLOW + "\u2022 " + ConsoleColors.RESET + "Chooose option: 1. \u270E Edit  2. \u2212 Remove  3. \u21E4 Back");
+                        Menu.printUserChoice();
+                        choice = ValidationHandler.getChoice(3);
+                        switch (choice) {
+                            case 1:
+                                System.out.println("    " + "\u270E Edit: " + "1. Name");
+                                System.out.println("    " + "        " + "2. BirthDate");
+                                System.out.println("    " + "        " + "3. Gender");
+                                System.out.println("    " + "        " + "4. Major");
+                                System.out.println("    " + "        " + "5. Mark");
+                                Menu.printUserChoice();
+                                selection = ValidationHandler.getChoice(5);
+                                switch (selection) {
+                                    case 1:
+                                        //System.out.println("    " + "New student name: ");
+                                        System.out.println("\n            - Enter new Student's name -");
+                                        String newStudentFullName = StudentInfoAddition.addStudentName();
+                                        
+                                        if (studentList.editFirstName(StudentInfoAddition.getFirstName(newStudentFullName), searchedStudent.getID()) 
+                                        &&  studentList.editLastName(StudentInfoAddition.getLastName(newStudentFullName), searchedStudent.getID())) {
+                                            Menu.printSuccessNotification("Edit Successful!");
+                                        }
+                                        //studentList.editFirstName(newStudentFullName, searchedStudent.getID());
+                                        //studentList.editLastName(newStudentFullName, searchedStudent.getID());
+                                        break;
+                                    case 2:
+                                        System.out.println("\n            - Enter new Student's birthdate -");
+                                        int newBirthYear  = StudentInfoAddition.addStudentBirthYear();
+                                        int newBirthMonth = StudentInfoAddition.addStudentBirthMonth();
+                                        int newBirthDay   = StudentInfoAddition.addStudentBirthDay(newBirthMonth, newBirthYear);
+                                        if(studentList.editBirthdate(String.valueOf(newBirthDay)+"/"+String.valueOf(newBirthMonth)+"/"+String.valueOf(newBirthYear), searchedStudent.getID())) {
+                                            Menu.printSuccessNotification("Edit Successful!");
+                                        }
+                                        break;
+                                    case 3:
+                                        System.out.println("\n            - Enter new Student's gender -");
+                                        Menu.printGenderMenu();
+                                        int newGender = StudentInfoAddition.addStudentGender();
+                                        if(studentList.editGender((newGender == 1) ? "Nam" : "Nữ", searchedStudent.getID())) {
+                                            Menu.printSuccessNotification("Edit Successful!");
+                                        }
+                                        break;
+                                    case 4:
+                                        System.out.println("\n            - Enter new Student's major -");
+                                        Menu.printMajorMenu();
+                                        String newMajor = StudentInfoAddition.addStudentMajor();
+                                        if(studentList.editMajor(newMajor, searchedStudent.getID())) {
+                                             Menu.printSuccessNotification("Edit Successful!");
+                                        }
+                                        break;
+                                    case 5:
+                                        System.out.println("\n            - Enter new Student's mark -");
+                                        break;
+                                    default:
+                                        throw new AssertionError();
+                                }
+                                break;
+                            case 2:
+                                //System.out.println("\n            - Enter Student's ID -");
+                                //System.out.print("    Remove: ");
+                                if(StudentInfoRemoving.removeStudent(searchedStudent.getID())) {
+                                    Menu.printSuccessNotification("REMOVED SUCCESSFUL");
+                                } else {
+                                    Menu.printFailedNotification("INVALID ID!");
+                                }
+                                    break;
+                            case 3: 
+                                break;
+                        }
+                    } else {
+                        Menu.printFailedNotification("NOT FOUND!");
+                    }
+                    Thread.sleep(1000);
+                    break;
+                case 3:
+                    System.out.println("    " + "List :" + "1. All");
+                    System.out.println("    " + "      " + "2. IT");
+                    System.out.println("    " + "      " + "3. English");
+                    System.out.println("    " + "      " + "4. Tourist");
+                    Menu.printUserChoice();
+                    selection = ValidationHandler.getChoice(4);
+                    switch (selection) {
+                        case 1: break;
+                        case 2: StudentMenu.printStudentsList(studentList, "IT"); break;
+                        case 3: StudentMenu.printStudentsList(studentList, "English"); break;
+                        case 4: StudentMenu.printStudentsList(studentList, "Tourist"); break;
+                        default:
+                            throw new AssertionError();
+                    }
+                    //StudentMenu.printStudentsList(studentList, "IT");
+                    //StudentMenu.printAllStudentsList(studentList);
                     break;
             }
-        } while (choice != 5);
-        System.out.println("end");
-        
-        
+        } while (choice != 4);
+        System.out.println("    " + "\u270B Good Bye. See You Again!!! \u270B"); // 263a
+        Thread.sleep(1000);
     }
 }

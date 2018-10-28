@@ -93,6 +93,10 @@ public class Student {
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
+    
+    public String getFullName() {
+        return this.lastName + " " + this.firstName;
+    }
 
     public int getBirthDay() {
         return birthDay;
@@ -143,7 +147,9 @@ public class Student {
     }
     
     public String getBirthdate() {
-        return this.birthDay+ "/" +this.birthMonth+ "/" +this.birthYear;
+        return ((this.birthDay < 10) ? "0" + this.birthDay : this.birthDay) + "/" + 
+                ((this.birthMonth < 10) ? "0" + this.birthMonth : this.birthMonth) + "/" + 
+                this.birthYear;
     }
     
     public void setBirthdate(String birthdate) {

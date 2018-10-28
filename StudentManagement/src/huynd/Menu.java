@@ -11,7 +11,7 @@ package huynd;
  */
 public class Menu {
     private static void printLine() {
-        System.out.println(ConsoleColors.CYAN + "==========================================================" + ConsoleColors.RESET);
+        System.out.println(ConsoleColors.CYAN + "===========================================================" + ConsoleColors.RESET);
     }
     public static void printMainMenu() {
         System.out.println("============= FPT Management Student Program =============");
@@ -22,16 +22,16 @@ public class Menu {
         Menu.printUserChoice();
     }
     public static void printUserChoice() {
-        System.out.print("    Your choice is: ");
+        System.out.print("    "+ ConsoleColors.GREEN + "\u2022 " + ConsoleColors.RESET + "Your choice is: ");
     }
     
     public static void printAdminMenu() {
-        Menu.printLine();
-        System.out.println(ConsoleColors.DARK_BLUE + "    1. Add new student" + ConsoleColors.RESET);
-        System.out.println(ConsoleColors.DARK_BLUE + "    2. Edit student info" + ConsoleColors.RESET);
-        System.out.println(ConsoleColors.DARK_BLUE + "    3. Remove student" + ConsoleColors.RESET);
-        System.out.println(ConsoleColors.DARK_BLUE + "    4. Search student" + ConsoleColors.RESET);
-        System.out.println(ConsoleColors.DARK_BLUE + "    5. Back" + ConsoleColors.RESET);
+        //Menu.printLine();
+        System.out.println(ConsoleColors.CYAN + "============= " + ConsoleColors.RESET + "FPT Students Management Program"+ ConsoleColors.CYAN + " =============" + ConsoleColors.RESET);
+        System.out.println(ConsoleColors.DARK_BLUE + "    1. \u2795 Add new student" + ConsoleColors.RESET);
+        System.out.println(ConsoleColors.DARK_BLUE + "    2. \u2315 Search student" + ConsoleColors.RESET);
+        System.out.println(ConsoleColors.DARK_BLUE + "    3. \u2635 List students" + ConsoleColors.RESET);
+        System.out.println(ConsoleColors.DARK_BLUE + "    4. \u21E4 Back" + ConsoleColors.RESET);
         Menu.printLine();
         Menu.printUserChoice();
     }
@@ -39,7 +39,7 @@ public class Menu {
         
     }
     public static void printGenderMenu() {
-        System.out.println("    - Gender: 1. Male      2. Female");
+        System.out.println("    - Gender: 1. \u2642 Male      2. \u2640 Female");
     }
     public static void printMajorMenu() {
         System.out.println("    " + "- Major: 1. Tourist    2. IT    3. English");
@@ -52,10 +52,10 @@ public class Menu {
         System.out.println("    " + ConsoleColors.YELLOW + "\u2022 " + ConsoleColors.RESET + title + "1. Yes    2. No");
     }
     public static void printSuccessNotification(String title) {
-        System.out.println("    " + ConsoleColors.GREEN + title + ConsoleColors.RESET);
+        System.out.println("    " + ConsoleColors.GREEN + "\u2713 " + title + ConsoleColors.RESET);
     }
     public static void printFailedNotification(String title) {
-        System.out.println("    " + ConsoleColors.RED + title + ConsoleColors.RESET);
+        System.out.println("    " + ConsoleColors.RED + "\u2716 " + title + ConsoleColors.RESET);
     }
     
 }

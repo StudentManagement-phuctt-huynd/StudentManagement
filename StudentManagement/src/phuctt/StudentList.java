@@ -294,7 +294,13 @@ public class StudentList extends HashMap<String, Student> {
         }
     }
 
-    public Student findbyId(String id) {
+    /**
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    public Student findbyId(String id) throws Exception {
         return super.get(id);
     }
 
@@ -345,4 +351,5 @@ public class StudentList extends HashMap<String, Student> {
         }
         return false;
     }
+
 }
