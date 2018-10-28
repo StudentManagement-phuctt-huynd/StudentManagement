@@ -345,7 +345,8 @@ public class StudentList extends HashMap<String, Student> {
     
     public boolean removeStudent(String id) throws IOException {
         Student s = super.get(id);
-        if (super.remove(id, s)) {
+        if (s != null) {
+            super.remove(id);
             writeFile();
             return true;
         }
