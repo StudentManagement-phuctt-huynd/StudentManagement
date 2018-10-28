@@ -6,23 +6,13 @@
 package huynd;
 
 import huynd.studentInfo.StudentInfoAddition;
-import huynd.studentInfo.StudentInfoRemoving;
+//import huynd.studentInfo.StudentInfoRemoving;
 import huynd.studentInfo.StudentInfoSearching;
 import huynd.studentInfo.StudentMenu;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.util.Scanner;
 
-import java.io.Console;
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.Iterator;
-import java.util.TreeSet;
 import phuctt.Student;
 import phuctt.StudentList;
 /**
@@ -116,9 +106,8 @@ public class Test {
                                 }
                                 break;
                             case 2:
-                                //System.out.println("\n            - Enter Student's ID -");
-                                //System.out.print("    Remove: ");
-                                if(StudentInfoRemoving.removeStudent(searchedStudent.getID())) {
+                                
+                                if(studentList.removeStudent(searchedStudent.getID())) {
                                     Menu.printSuccessNotification("REMOVED SUCCESSFUL");
                                 } else {
                                     Menu.printFailedNotification("INVALID ID!");
@@ -133,22 +122,22 @@ public class Test {
                     Thread.sleep(1000);
                     break;
                 case 3:
-                    System.out.println("    " + "List :" + "1. All");
-                    System.out.println("    " + "      " + "2. IT");
-                    System.out.println("    " + "      " + "3. English");
-                    System.out.println("    " + "      " + "4. Tourist");
+                    System.out.println("    " + "List : " + "1. All");
+                    System.out.println("    " + "       " + "2. IT");
+                    System.out.println("    " + "       " + "3. English");
+                    System.out.println("    " + "       " + "4. Tourist");
                     Menu.printUserChoice();
                     selection = ValidationHandler.getChoice(4);
+                    System.out.println("    ID              Full Name               Birthday    Gender     Major    English    Math     IT");
+                    System.out.println("------------------------------------------------------------------------------------------------------");
                     switch (selection) {
-                        case 1: break;
-                        case 2: StudentMenu.printStudentsList(studentList, "IT"); break;
-                        case 3: StudentMenu.printStudentsList(studentList, "English"); break;
-                        case 4: StudentMenu.printStudentsList(studentList, "Tourist"); break;
+                        case 1: StudentMenu.printAllStudentsList(studentList); break;
+                        case 2: StudentMenu.printStudentsListByMajor(studentList, "IT"); break;
+                        case 3: StudentMenu.printStudentsListByMajor(studentList, "English"); break;
+                        case 4: StudentMenu.printStudentsListByMajor(studentList, "Tourist"); break;
                         default:
                             throw new AssertionError();
                     }
-                    //StudentMenu.printStudentsList(studentList, "IT");
-                    //StudentMenu.printAllStudentsList(studentList);
                     break;
             }
         } while (choice != 4);

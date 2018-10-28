@@ -343,9 +343,19 @@ public class StudentList extends HashMap<String, Student> {
         return ts;
     }
     
+//    public boolean removeStudent(String id) throws IOException {
+//        Student s = super.get(id);
+//        if (s != null) {
+//            super.remove(id);
+//            writeFile();
+//            return true;
+//        }
+//        return false;
+//    }
     public boolean removeStudent(String id) throws IOException {
         Student s = super.get(id);
         if (s != null) {
+            majorList.get(s.getMajor()).getStudentIdList().remove(s.getID());
             super.remove(id);
             writeFile();
             return true;

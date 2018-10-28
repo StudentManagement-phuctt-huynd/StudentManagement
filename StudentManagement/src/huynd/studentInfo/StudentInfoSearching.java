@@ -5,7 +5,6 @@
  */
 package huynd.studentInfo;
 
-import java.io.IOException;
 import java.util.Scanner;
 import phuctt.Student;
 import phuctt.StudentList;
