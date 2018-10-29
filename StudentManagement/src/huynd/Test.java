@@ -120,6 +120,7 @@ public class Test {
                                             default:
                                                 throw new AssertionError();
                                         }
+                                        Menu.printSuccessNotification("Edit Successful!");
                                         break;
                                     default:
                                         throw new AssertionError();
