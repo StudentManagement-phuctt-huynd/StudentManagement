@@ -15,16 +15,10 @@ import java.util.Scanner;
  */
 public class ValidationHandler {
     
-    public static String validateStudentName(String studentName) { 
+    public static String validateStudentName(String studentName) {
+//        studentName = studentName.trim();
         studentName = studentName.replaceAll("[^A-Za-zá-ỹÁ-Ỹ ]+", "");
         studentName = studentName.replaceAll(" +", " ");
-        
-        int spaces = StringHandler.countSpaces(studentName);
-        if(studentName.isEmpty() || spaces < 1) { return ""; }
-        if(StudentInfoAddition.getFirstName(studentName).length() < 1 || StudentInfoAddition.getLastName(studentName).length() < 2) {
-            return "";
-        }
-        
         
         if(studentName.charAt(0) == ' ') {
             studentName = studentName.substring(1);
@@ -33,6 +27,12 @@ public class ValidationHandler {
             studentName = studentName.substring(0, studentName.length() - 1);
         }
         
+        int spaces = StringHandler.countSpaces(studentName);
+        if(studentName.isEmpty() || spaces < 1) { return ""; }
+        if(StudentInfoAddition.getFirstName(studentName).length() < 1 || StudentInfoAddition.getLastName(studentName).length() < 2) {
+            return "";
+        }
+            
         String[] subString = studentName.split(" ");
         for (int i = 0; i <= spaces; i++) {
             if ( (StringHandler.countVowel(subString[i]) < 1 || StringHandler.countConsonant(subString[i]) < 2) && subString[i].length() >= 5) { return ""; }
